@@ -17,7 +17,7 @@ public class Despesas {
 	public Despesas(){
 
 	}
-	public Despesas(int id, BigDecimal valor, MysqlxDatatypes.Scalar.String descricao, Categoria categoria, Date data, String pagamento) {
+	public Despesas(int id, BigDecimal valor, String descricao, Categoria categoria, Date data, String pagamento) {
 		this.id = id;
 		this.valor = valor;
 		this.descricao = descricao;

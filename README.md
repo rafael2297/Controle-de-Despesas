@@ -90,7 +90,7 @@ CREATE TABLE tb_saldo (
 
 ## 💡 Próximos Passos (Parte 2 do Projeto)
 
-A estrutura do banco de dados e as dependências já estão configuradas. A próxima etapa de desenvolvimento incluirá a criação da lógica de aplicação em Java para implementar as seguintes funcionalidades:
+A estrutura do banco de dados e as dependências já estão configuradas. A próxima etapa de desenvolvimento será a criação do front-end, que será responsável pela interface e interação com o usuário e implementar as seguintes funcionalidades:
 
   * **Instruções de Uso (Manual):** Adicionar um guia detalhado sobre como usar o sistema, com explicações sobre cada funcionalidade.
   * **Lista de Desejos:** Criar uma nova tabela no banco de dados (`tb_lista_desejos`) e a lógica em Java para gerenciar itens com: `descrição`, `data de início`, `valor`, `status de checagem` e `data da compra`.

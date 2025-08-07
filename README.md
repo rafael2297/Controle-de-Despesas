@@ -120,8 +120,3 @@ Gostaríamos de agradecer às seguintes pessoas por sua colaboração e apoio ne
   * **[Julia](https://www.google.com/search?q=https://github.com/usuario1)** - Criação e modificação pesada de Banco de Dados.
   * **[Gisely](https://www.google.com/search?q=https://github.com/usuario1)** - Criar e modificar parte de Categoria.
   * **[Rafael](https://github.com/rafael2297)** - Criar e modificar Relatório, integrar as diferentes partes e responsável pela conversão em site.
-
-<!-- end list -->
-
-```
-```

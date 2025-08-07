@@ -1,9 +1,3 @@
-Com certeza\! Adicionar uma lista de funcionalidades esperadas para a próxima fase do projeto torna o README ainda mais útil e claro sobre o futuro do sistema.
-
-Aqui está o seu README atualizado com a nova seção **"Próximos Passos (Parte 2)"**, detalhando as funcionalidades planejadas.
-
------
-
 # 💰 Controle de Despesas
 
 Este é o projeto **Controle de Despesas**, desenvolvido como parte do curso **PI Jovem Programador**. O objetivo principal é criar um sistema robusto para gerenciar e monitorar receitas e despesas pessoais, oferecendo uma visão clara da saúde financeira do usuário.

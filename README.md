@@ -1,3 +1,9 @@
+Com certeza\! Adicionar uma lista de funcionalidades esperadas para a próxima fase do projeto torna o README ainda mais útil e claro sobre o futuro do sistema.
+
+Aqui está o seu README atualizado com a nova seção **"Próximos Passos (Parte 2)"**, detalhando as funcionalidades planejadas.
+
+-----
+
 # 💰 Controle de Despesas
 
 Este é o projeto **Controle de Despesas**, desenvolvido como parte do curso **PI Jovem Programador**. O objetivo principal é criar um sistema robusto para gerenciar e monitorar receitas e despesas pessoais, oferecendo uma visão clara da saúde financeira do usuário.
@@ -85,7 +91,37 @@ CREATE TABLE tb_saldo (
     saldo_final DECIMAL(10,2)
 );
 ```
+
+-----
+
+## 💡 Próximos Passos (Parte 2 do Projeto)
+
+A estrutura do banco de dados e as dependências já estão configuradas. A próxima etapa de desenvolvimento incluirá a criação da lógica de aplicação em Java para implementar as seguintes funcionalidades:
+
+  * **Instruções de Uso (Manual):** Adicionar um guia detalhado sobre como usar o sistema, com explicações sobre cada funcionalidade.
+  * **Lista de Desejos:** Criar uma nova tabela no banco de dados (`tb_lista_desejos`) e a lógica em Java para gerenciar itens com: `descrição`, `data de início`, `valor`, `status de checagem` e `data da compra`.
+  * **Página de Parcelados:** Desenvolver uma interface para visualizar as parcelas pendentes que ainda serão debitadas nas próximas faturas do cartão de crédito.
+  * **Calendário Mensal:** Implementar um calendário que exiba de forma objetiva as datas previstas de receitas e despesas (como salários e vencimentos de contas), com a possibilidade de visualizar os valores gastos em cada data.
+  * **Separação de Gastos por Categorias:** Adicionar a funcionalidade de somar e visualizar o valor total gasto em cada categoria específica (por exemplo, "quanto gastei em Lanche" ou "quanto gastei em Gasolina").
+
 -----
 
 ## 🤝 Contribuições
 
+Sinta-se à vontade para enviar sugestões ou reportar problemas. Este projeto é uma base para aprendizado e evolução\!
+
+-----
+
+## ✨ Agradecimentos
+
+Gostaríamos de agradecer às seguintes pessoas por sua colaboração e apoio neste projeto:
+
+  * **[Hayanne](https://www.google.com/search?q=https://github.com/usuario1)** - Criar e modificar parte de Despesas e Receita, responsável pelo gerenciamento e organização em geral.
+  * **[Julia](https://www.google.com/search?q=https://github.com/usuario1)** - Criação e modificação pesada de Banco de Dados.
+  * **[Gisely](https://www.google.com/search?q=https://github.com/usuario1)** - Criar e modificar parte de Categoria.
+  * **[Rafael](https://github.com/rafael2297)** - Criar e modificar Relatório, integrar as diferentes partes e responsável pela conversão em site.
+
+<!-- end list -->
+
+```
+```

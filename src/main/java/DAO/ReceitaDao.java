@@ -11,7 +11,8 @@ public class ReceitaDao {
 
     public static List<Receita> getAll() {
         List<Receita> receitas = new ArrayList<>();
-        String sql = "SELECT * FROM tb_receita";
+
+        String sql = "SELECT r.*, c.nome_categoria FROM tb_receita r JOIN tb_categorias c ON r.id_categoria = c.id_categoria";
 
         try (Connection con = Conexao.getConexao();
              PreparedStatement stm = con.prepareStatement(sql);
@@ -25,8 +26,10 @@ public class ReceitaDao {
                 r.setDataReceita(rs.getDate("data_receita"));
                 r.setPagamento(rs.getString("pagamento"));
 
+
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt("id_categoria"));
+                categoria.setNomeCategoria(rs.getString("nome_categoria"));
                 r.setCategoria(categoria);
 
                 receitas.add(r);
@@ -220,4 +223,56 @@ public class ReceitaDao {
             }
         }
     }
+
+    public static Receita inserirTest(Receita receita) {
+        String sqlInsert = "INSERT INTO tb_receita (id, valor_recebido, descricao_receita, data_receita, pagamento, id_categoria) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlUpdateSaldo = "UPDATE tb_saldo SET saldo_final = saldo_final + ? WHERE id = 1";
+
+        Connection con = null;
+
+        try {
+            con = Conexao.getConexao();
+            con.setAutoCommit(false);
+
+            try (PreparedStatement stmReceita = con.prepareStatement(sqlInsert);
+                 PreparedStatement stmSaldo = con.prepareStatement(sqlUpdateSaldo)) {
+
+                stmReceita.setInt(1, receita.getId());
+                stmReceita.setBigDecimal(2, receita.getValorRecebido());
+                stmReceita.setString(3, receita.getDescricaoReceita());
+                stmReceita.setDate(4, receita.getDataReceita());
+                stmReceita.setString(5, receita.getPagamento());
+                stmReceita.setInt(6, receita.getCategoria().getIdCategoria());
+
+                stmReceita.executeUpdate();
+
+                stmSaldo.setBigDecimal(1, receita.getValorRecebido());
+                stmSaldo.executeUpdate();
+
+                con.commit();
+                return receita;
+            }
+
+        } catch (SQLException e) {
+            try {
+                if (con != null) con.rollback();
+            } catch (SQLException ex) {
+                System.err.println("Erro ao fazer rollback: " + ex.getMessage());
+            }
+            System.err.println("Erro ao inserir receita: " + e.getMessage());
+            return null;
+        } finally {
+            try {
+                if (con != null) {
+                    con.setAutoCommit(true);
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
+    }
+
 }
+
+

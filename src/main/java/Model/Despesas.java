@@ -1,7 +1,5 @@
 package Model;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 

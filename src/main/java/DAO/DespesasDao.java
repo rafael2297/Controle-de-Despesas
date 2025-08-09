@@ -13,30 +13,41 @@ import Model.Despesas;
 public class DespesasDao {
 
 
-    public static List<Despesas> getAll() {
-        List<Despesas> gastos = new ArrayList<>();
-        String sql = "SELECT * FROM tb_despesas";
+	public static List<Despesas> getAll() {
+	    List<Despesas> gastos = new ArrayList<>();
+	    
+	    // Altere esta linha para fazer o JOIN
+	    String sql = "SELECT d.*, c.nome_categoria FROM tb_despesas d JOIN tb_categorias c ON d.id_categoria = c.id_categoria";
+	    
+	    try (Connection con = Conexao.getConexao();
+	         PreparedStatement stm = con.prepareStatement(sql);
+	         ResultSet rs = stm.executeQuery()) {
 
-        try (Connection con = Conexao.getConexao();
-             PreparedStatement stm = con.prepareStatement(sql);
-             ResultSet rs = stm.executeQuery()) {
+	        while (rs.next()) {
+	            Despesas d = new Despesas();
+	            d.setId(rs.getInt("id_despesa"));
+	            d.setValor(rs.getBigDecimal("valor"));
+	            d.setDescricao(rs.getString("descricao"));
+	            d.setData(rs.getDate("data_despesa"));
+	            d.setPagamento(rs.getString("pagamento"));
+	            
+	            // Passo 2: Crie o objeto Categoria e preencha-o
+	            Categoria categoria = new Categoria();
+	            categoria.setIdCategoria(rs.getInt("id_categoria"));
+	            categoria.setNomeCategoria(rs.getString("nome_categoria"));
+	            
+	            // Passo 3: Associe a categoria à despesa
+	            d.setCategoria(categoria);
+	            
+	            gastos.add(d);
+	        }
 
-            while (rs.next()) {
-                Despesas d = new Despesas();
-                d.setId(rs.getInt("id_despesa"));
-                d.setValor(rs.getBigDecimal("valor"));
-                d.setDescricao(rs.getString("descricao"));
-                d.setData(rs.getDate("data_despesa"));
-                d.setPagamento(rs.getString("pagamento"));
-                gastos.add(d);
-            }
+	    } catch (SQLException e) {
+	        System.err.println("Erro ao listar despesas: " + e.getMessage());
+	    }
 
-        } catch (SQLException e) {
-            System.err.println("Erro ao listar despesas: " + e.getMessage());
-        }
-
-        return gastos;
-    }
+	    return gastos;
+	}
 
 
     public static Despesas getById(int id) {
@@ -214,7 +225,43 @@ public class DespesasDao {
             if (con != null) try { con.setAutoCommit(true); con.close(); } catch (SQLException e) { /* ignore */ }
         }
     }
+    
+    public static Despesas inserirTest(Despesas despesas) {
+        String sqlInserirDespesa = "INSERT INTO tb_despesas (id_despesa, valor, descricao, data_despesa, pagamento, id_categoria) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlAtualizarSaldo = "UPDATE tb_saldo SET saldo_final = saldo_final + ? WHERE id = 1";
 
+        Connection con = null;
+        try {
+            con = Conexao.getConexao();
+            con.setAutoCommit(false);
+
+            try (PreparedStatement stmDespesa = con.prepareStatement(sqlInserirDespesa);
+                 PreparedStatement stmSaldo = con.prepareStatement(sqlAtualizarSaldo)) {
+
+            	stmDespesa.setInt(1, despesas.getId());
+                stmDespesa.setBigDecimal(2, despesas.getValor());
+                stmDespesa.setString(3, despesas.getDescricao());
+                stmDespesa.setDate(4, despesas.getData());
+                stmDespesa.setString(5, despesas.getPagamento());
+                stmDespesa.setInt(6, despesas.getCategoria().getIdCategoria());
+
+                stmDespesa.executeUpdate();
+
+                stmSaldo.setBigDecimal(1, despesas.getValor());
+                stmSaldo.executeUpdate();
+
+                con.commit();
+                return despesas;
+            }
+        } catch (SQLException e) {
+            if (con != null) try { con.rollback(); } catch (SQLException ex) { /* ignore */ }
+            System.err.println("Erro ao inserir despesa ou atualizar saldo: " + e.getMessage());
+            return null;
+        } finally {
+            if (con != null) try { con.setAutoCommit(true); con.close(); } catch (SQLException e) { /* ignore */ }
+        }
+    }
+    
 
 
 

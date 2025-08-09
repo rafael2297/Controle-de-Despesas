@@ -67,7 +67,7 @@ public class Menu {
                 case "3" -> deletarDespesa();
                 case "4" -> listarDespesas();
                 case "0" -> {
-                    System.out.println("Saindo...");
+                    System.out.println("Voltando...");
                     return;
                 }
                 default -> System.out.println("Opção inválida.");
@@ -92,7 +92,7 @@ public class Menu {
                 case "3" -> criarRelatorioMensal();
                 case "4" -> exibirRelatorioDespesaFixa();
                 case "0" -> {
-                    System.out.println("Saindo...");
+                    System.out.println("Voltando...");
                     return;
                 }
                 default -> System.out.println("❌ Opção inválida. Tente novamente.");
@@ -117,7 +117,7 @@ public class Menu {
                 case "3" -> deletarCategoria();
                 case "4" -> mostrarCategorias();
                 case "0" -> {
-                    System.out.println("Saindo...");
+                    System.out.println("Voltando...");
                     return;
                 }
                 default -> System.out.println("Opção inválida.");
@@ -348,12 +348,13 @@ public class Menu {
                 System.out.println("Nenhuma despesa cadastrada.");
             } else {
                 for (Model.Despesas d : despesas) {
+                    
                     System.out.printf("ID: %d | Descrição: %s | Valor: R$ %.2f | Data: %s | Categoria: %s | Pagamento: %s%n",
                             d.getId(),
                             d.getDescricao(),
                             d.getValor(),
                             d.getData(),
-                            d.getCategoria(),
+                            d.getCategoria().getNomeCategoria(),
                             d.getPagamento());
                 }
             }
@@ -470,6 +471,20 @@ public class Menu {
     }
 
     private static void criarRelatorioMensal() {
+        System.out.println("Selecione o mês do relatório:");
+        System.out.println("1 - Janeiro");
+        System.out.println("2 - Fevereiro");
+        System.out.println("3 - Março");
+        System.out.println("4 - Abril");
+        System.out.println("5 - Maio");
+        System.out.println("6 - Junho");
+        System.out.println("7 - Julho");
+        System.out.println("8 - Agosto");
+        System.out.println("9 - Setembro");
+        System.out.println("10 - Outubro");
+        System.out.println("11 - Novembro");
+        System.out.println("12 - Dezembro");
+
         System.out.print("Mês do Relatório desejado (número): ");
         try {
             int valor = Integer.parseInt(scanner.nextLine());
@@ -703,22 +718,23 @@ public class Menu {
 
     private static void listarReceitas() {
         System.out.println("\n=== Lista de Receitas ===");
-        List<Receita> receitas = ReceitaDao.getAll();
-
-        if (receitas.isEmpty()) {
-            System.out.println("Nenhuma receita cadastrada.");
-        } else {
-            for (Receita r : receitas) {
-                System.out.printf(
-                        "ID: %d | Valor: R$ %.2f | Data: %s | Categoria: %s | Desc: %s | Pagamento: %s%n",
-                        r.getId(),
-                        r.getValorRecebido(),
-                        r.getDataReceita(),
-                        r.getCategoria() != null ? r.getCategoria().getNomeCategoria() : "N/A",
-                        r.getDescricaoReceita(),
-                        r.getPagamento()
-                );
+        try {
+            List<Model.Receita> receitas = ReceitaDao.getAll();
+            if (receitas.isEmpty()) {
+                System.out.println("Nenhuma receita cadastrada.");
+            } else {
+                for (Model.Receita r : receitas) {
+                    System.out.printf("ID: %d | Descrição: %s | Valor: R$ %.2f | Data: %s | Categoria: %s | Pagamento: %s%n",
+                            r.getId(),
+                            r.getDescricaoReceita(),
+                            r.getValorRecebido(),
+                            r.getDataReceita(),
+                            r.getCategoria().getNomeCategoria(), 
+                            r.getPagamento());
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Erro ao listar receitas: " + e.getMessage());
         }
     }
 
